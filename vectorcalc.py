@@ -1,4 +1,3 @@
-
 import numpy as np
 import numdifftools as nd
 from itertools import permutations
