@@ -53,6 +53,23 @@ class VectCalc(object):
 
     def curl(self):
         """
+        The curl describes the "rotation" of the vector space
+        about the different axes. There are many ways of defining
+        the curl. For this function the tesnor version was choosen.
+        Because, it is the most general definition. This definition
+        uses the Levi-Civita symbol for the calculation. This is a
+        rank 3 symbol that has the property of being 0 is any two
+        of its indices are equal to eachother, and equal to the
+        sign of the parity of the particular permutation of the
+        indices.
+
+        The particular implementation below is a very simple
+        implementation of this concept where it iterates through
+        all the permutation of the set (0,1,2,...,n-1). These
+        indices are then used to calculate the particular value
+        of the Levi-Civita symbol and the pre-calculated Jacobian
+        of the vector space. These are then multiplied by eachother
+        and the produces are then summed over the permutations. 
         """
         n = len(self.x)
         prod = np.zeros(n)
@@ -63,6 +80,18 @@ class VectCalc(object):
         return prod
 
     def levi_civita(self,indx):
+        """
+        The Levi-Civita symbol is a rank 3 symbol with a value of
+        zero if any two indices are equal, or it is equal to sign
+        of the permutation based on the parity of the particular
+        permutation.
+
+        This implementation uses the anti-symmetry of the symbol
+        levi_civita([i,j,k]) = -levi_civita([i,k,j]). It then
+        checks the different locations of the permutation of this 
+        property. Each time it finds the anti-symmetric condition
+        it multiplies the parity by -1.
+        """
         if(len(set(indx))==len(indx)):
             parity = 1
             for i in range(0,len(indx)-1):
